@@ -15,12 +15,7 @@ import { toast } from 'react-toastify'
 const ProductListPage = () => {
   const { pageNumber } = useParams()
 
-  const {
-    data: products,
-    isLoading,
-    error,
-    refetch,
-  } = useGetProductsQuery({
+  const { data, isLoading, error, refetch } = useGetProductsQuery({
     pageNumber,
   })
 
@@ -85,11 +80,11 @@ const ProductListPage = () => {
               </tr>
             </thead>
             <tbody>
-              {products.map((product) => (
+              {data.products.map((product) => (
                 <tr key={product._id}>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
-                  <td>R{product.price}</td>
+                  <td>${product.price}</td>
                   <td>{product.category}</td>
                   <td>{product.brand}</td>
                   <td>
@@ -110,11 +105,7 @@ const ProductListPage = () => {
               ))}
             </tbody>
           </Table>
-          <Paginate
-            pages={products.pages}
-            page={products.page}
-            isAdmin={true}
-          />
+          <Paginate pages={data.pages} page={data.page} isAdmin={true} />
         </>
       )}
     </>

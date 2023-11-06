@@ -3,6 +3,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { Container, Navbar, Nav, NavDropdown, Badge } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import { useLoginMutation } from '../slices/usersApiSlice'
+import SearchBox from './SearchBox'
 import { logout } from '../slices/authSlice'
 import { FaCartPlus, FaUser } from 'react-icons/fa'
 
@@ -34,7 +35,7 @@ const Header = () => {
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
-            <Nav>
+            {/* <Nav>
               <NavDropdown
                 title='Search by Category'
                 id='navbarScrollingDropdown'
@@ -62,8 +63,10 @@ const Header = () => {
               <LinkContainer to='/collection'>
                 <Nav.Link>Collection</Nav.Link>
               </LinkContainer>
-            </Nav>
+            </Nav> */}
+
             <Nav className='ms-auto'>
+              <SearchBox />
               <LinkContainer to='/cart'>
                 <Nav.Link>
                   <FaCartPlus />
