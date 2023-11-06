@@ -3,7 +3,6 @@ import { Table, Form, Button, Row, Col } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { FaTimes } from 'react-icons/fa'
-
 import { toast } from 'react-toastify'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
@@ -12,39 +11,49 @@ import { useGetMyOrdersQuery } from '../slices/ordersApiSlice'
 import { setCredentials } from '../slices/authSlice'
 
 const ProfilePage = () => {
+  // State variables for user profile information
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
 
+  // Get user information from the Redux store
   const { userInfo } = useSelector((state) => state.auth)
 
+  // Query to fetch user's order information
   const { data: orders, isLoading, error } = useGetMyOrdersQuery()
 
+  // Mutation to update user profile
   const [updateProfile, { isLoading: loadingUpdateProfile }] =
     useProfileMutation()
 
   useEffect(() => {
+    // Populate user profile information when userInfo changes
     setName(userInfo.name)
     setEmail(userInfo.email)
   }, [userInfo.email, userInfo.name])
 
   const dispatch = useDispatch()
+
+  // Function to handle profile update submission
   const submitHandler = async (e) => {
     e.preventDefault()
     if (password !== confirmPassword) {
       toast.error('Passwords do not match')
     } else {
       try {
+        // Update user profile with new information
         const res = await updateProfile({
           _id: userInfo._id,
           name,
           email,
           password,
         }).unwrap()
+        // Update user credentials in the Redux store
         dispatch(setCredentials({ ...res }))
         toast.success('Profile updated successfully')
       } catch (err) {
+        // Display an error toast if there's an issue with updating the profile
         toast.error(err?.data?.message || err.error)
       }
     }
@@ -107,6 +116,7 @@ const ProfilePage = () => {
         {isLoading ? (
           <Loader />
         ) : error ? (
+          // Display an error message if there's an issue with fetching orders
           <Message variant='danger'>
             {error?.data?.message || error.error}
           </Message>
@@ -143,6 +153,7 @@ const ProfilePage = () => {
                     )}
                   </td>
                   <td>
+                    {/* Link to view order details */}
                     <LinkContainer to={`/order/${order._id}`}>
                       <Button className='btn-sm' variant='light'>
                         Details

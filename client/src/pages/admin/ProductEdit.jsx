@@ -11,6 +11,7 @@ import {
   useUploadProductImageMutation,
 } from '../../slices/productsApiSlice'
 
+// Define a functional component called ProductEdit
 const ProductEdit = () => {
   const { id: productId } = useParams()
 
@@ -186,4 +187,5 @@ const ProductEdit = () => {
   )
 }
 
+// Export the ProductEdit component as the default export
 export default ProductEdit

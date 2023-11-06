@@ -5,21 +5,29 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useLoginMutation } from '../slices/usersApiSlice'
 import SearchBox from './SearchBox'
 import { logout } from '../slices/authSlice'
+import { resetCart } from '../slices/cartSlice'
+import Logo from '../images/logo/logoWhite.png'
 import { FaCartPlus, FaUser } from 'react-icons/fa'
 
 const Header = () => {
+  // Get cart items and user information from Redux store
   const { cartItems } = useSelector((state) => state.cart)
   const { userInfo } = useSelector((state) => state.auth)
 
+  // Initialize the navigation hook and dispatch function
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
+  // Initialize the logout API mutation
   const [logoutApiCall] = useLoginMutation()
 
+  // Function to handle user logout
   const logoutHandler = async () => {
     try {
+      // Call the logout API and dispatch actions
       await logoutApiCall().unwrap()
       dispatch(logout())
+      dispatch(resetCart())
       navigate('/login')
     } catch (err) {
       console.error(err)
@@ -31,40 +39,14 @@ const Header = () => {
       <Navbar expand='lg' bg='dark' variant='dark'>
         <Container>
           <LinkContainer to='/'>
-            <Navbar.Brand>Shopix</Navbar.Brand>
+            <Navbar.Brand>
+              {' '}
+              <img className='img-fluid' src={Logo} alt='logo' />
+            </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
-            {/* <Nav>
-              <NavDropdown
-                title='Search by Category'
-                id='navbarScrollingDropdown'
-              >
-                <LinkContainer to='/women'>
-                  <div>
-                    <NavDropdown.Item>Women</NavDropdown.Item>
-                  </div>
-                </LinkContainer>
-                <LinkContainer to='/men'>
-                  <div>
-                    <NavDropdown.Item>Men</NavDropdown.Item>
-                  </div>
-                </LinkContainer>
-                <LinkContainer to='/kids'>
-                  <div>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href='/kids'>Kids</NavDropdown.Item>
-                  </div>
-                </LinkContainer>
-              </NavDropdown>
-              <LinkContainer to='/new-arrivals'>
-                <Nav.Link>New Arrivals</Nav.Link>
-              </LinkContainer>
-              <LinkContainer to='/collection'>
-                <Nav.Link>Collection</Nav.Link>
-              </LinkContainer>
-            </Nav> */}
-
+            {/* Navigation Links */}
             <Nav className='ms-auto'>
               <SearchBox />
               <LinkContainer to='/cart'>
@@ -79,6 +61,7 @@ const Header = () => {
                 </Nav.Link>
               </LinkContainer>
               {userInfo ? (
+                // Display user-related links and options when the user is logged in
                 <NavDropdown title={userInfo.name} id='username'>
                   <LinkContainer to='/profile'>
                     <NavDropdown.Item>Profile</NavDropdown.Item>
@@ -88,6 +71,7 @@ const Header = () => {
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : (
+                // Display a login link when the user is not logged in
                 <LinkContainer to='/login'>
                   <Nav.Link>
                     <FaUser />
@@ -95,7 +79,7 @@ const Header = () => {
                   </Nav.Link>
                 </LinkContainer>
               )}
-              {/* Admin Links */}
+              {/* Admin Links - Display only for admin users */}
               {userInfo && userInfo.isAdmin && (
                 <NavDropdown title='Admin' id='adminmenu'>
                   <LinkContainer to='/admin/productlist'>

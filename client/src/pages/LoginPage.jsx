@@ -9,33 +9,46 @@ import { setCredentials } from '../slices/authSlice'
 import { toast } from 'react-toastify'
 
 const LoginPage = () => {
+  // Initialize state variables for email and password
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  // Get Redux dispatch function and navigation function
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  // Use the 'useLoginMutation' hook to handle user login
   const [login, { isLoading }] = useLoginMutation()
 
+  // Get user info from Redux store
   const { userInfo } = useSelector((state) => state.auth)
 
+  // Extract the 'redirect' query parameter from the URL
   const { search } = useLocation()
   const sp = new URLSearchParams(search)
   const redirect = sp.get('redirect') || '/'
 
+  // Redirect the user if they are already logged in
   useEffect(() => {
     if (userInfo) {
       navigate(redirect)
     }
   }, [navigate, redirect, userInfo])
 
+  // Handle form submission
   const submitHandler = async (e) => {
     e.preventDefault()
     try {
+      // Attempt to log in with the provided email and password
       const res = await login({ email, password }).unwrap()
+
+      // Dispatch the user credentials to the Redux store
       dispatch(setCredentials({ ...res }))
+
+      // Redirect the user to the specified page or the default page
       navigate(redirect)
     } catch (err) {
+      // Display an error message if login fails
       toast.error(err?.data?.message || err.error)
     }
   }

@@ -11,24 +11,27 @@ import {
 import Rating from '../components/Rating'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-// import Meta from '../components/Meta'
+import Meta from '../components/Meta'
 import { addToCart } from '../slices/cartSlice'
 
 const ProductDetail = () => {
+  // Extract the `id` parameter from the URL
   const { id: productId } = useParams()
 
+  // Initialize state variables and get necessary functions/hooks
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
   const [qty, setQty] = useState(1)
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState('')
 
+  // Function to add the current product to the shopping cart
   const addToCartHandler = () => {
     dispatch(addToCart({ ...product, qty }))
     navigate('/cart')
   }
 
+  // Fetch product details using an API query
   const {
     data: product,
     isLoading,
@@ -36,15 +39,19 @@ const ProductDetail = () => {
     error,
   } = useGetProductDetailsQuery(productId)
 
+  // Get the user information from the Redux store
   const { userInfo } = useSelector((state) => state.auth)
 
+  // Use a mutation to create a product review
   const [createReview, { isLoading: loadingProductReview }] =
     useCreateReviewMutation()
 
+  // Function to submit a product review
   const submitHandler = async (e) => {
     e.preventDefault()
 
     try {
+      // Create a product review and refetch product details
       await createReview({
         productId,
         rating,
@@ -55,24 +62,28 @@ const ProductDetail = () => {
       setRating(0)
       setComment('')
     } catch (err) {
+      // Display an error toast if there's an issue with creating the review
       toast.error(err?.data?.message || err.error)
     }
   }
 
   return (
     <>
+      {/* Link to go back to the previous page */}
       <Link className='btn btn-light my-3' to='/'>
         Go Back
       </Link>
       {isLoading ? (
         <Loader />
       ) : error ? (
+        // Display an error message if the product details cannot be fetched
         <Message variant='danger'>
           {error?.data?.message || error.error}
         </Message>
       ) : (
         <>
-          {/* <Meta title={product.name} description={product.description} /> */}
+          {/* Set the meta information for the page */}
+          <Meta title={product.name} description={product.description} />
           <Row>
             <Col md={6}>
               <Image src={product.image} alt={product.name} fluid />
@@ -114,7 +125,7 @@ const ProductDetail = () => {
                     </Row>
                   </ListGroup.Item>
 
-                  {/* Qty Select */}
+                  {/* Quantity selection if the product is in stock */}
                   {product.countInStock > 0 && (
                     <ListGroup.Item>
                       <Row>
@@ -142,6 +153,7 @@ const ProductDetail = () => {
                     <Button
                       className='btn-block'
                       type='button'
+                      // Disable the button if the product is out of stock
                       disabled={product.countInStock === 0}
                       onClick={addToCartHandler}
                     >
@@ -199,6 +211,7 @@ const ProductDetail = () => {
                         ></Form.Control>
                       </Form.Group>
                       <Button
+                        // Disable the submit button while the review is being created
                         disabled={loadingProductReview}
                         type='submit'
                         variant='primary'
@@ -207,6 +220,7 @@ const ProductDetail = () => {
                       </Button>
                     </Form>
                   ) : (
+                    // Display a message and link to sign in if the user is not logged in
                     <Message>
                       Please <Link to='/login'>sign in</Link> to write a review
                     </Message>

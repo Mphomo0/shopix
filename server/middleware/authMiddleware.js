@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import asyncHandler from './asyncHandler.js'
 import User from '../models/userModel.js'
 
-// User must be authenticated
+// Middleware to protect routes - User must be authenticated
 const protect = asyncHandler(async (req, res, next) => {
   let token
 
@@ -13,6 +13,7 @@ const protect = asyncHandler(async (req, res, next) => {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
+      // Set the 'req.user' to the user object (excluding password)
       req.user = await User.findById(decoded.userId).select('-password')
 
       next()
@@ -27,7 +28,7 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 })
 
-// User must be an admin
+// Middleware to protect routes - User must be an admin
 const admin = (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     next()

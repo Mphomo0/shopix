@@ -5,19 +5,24 @@ import Message from '../../components/Message'
 import Loader from '../../components/Loader'
 import { useGetOrdersQuery } from '../../slices/ordersApiSlice'
 
+// Define a functional component called OrderListScreen
 const OrderListScreen = () => {
+  // Fetch data from the useGetOrdersQuery and destructure the result
   const { data: orders, isLoading, error } = useGetOrdersQuery()
 
   return (
     <>
       <h1>Orders</h1>
       {isLoading ? (
+        // If data is loading, display the Loader component
         <Loader />
       ) : error ? (
+        // If there's an error, display an error message
         <Message variant='danger'>
           {error?.data?.message || error.error}
         </Message>
       ) : (
+        // If data is available, display a table with orders
         <Table striped bordered hover responsive className='table-sm'>
           <thead>
             <tr>
@@ -32,6 +37,7 @@ const OrderListScreen = () => {
           </thead>
           <tbody>
             {orders.map((order) => (
+              // Map through each order and create a table row for each
               <tr key={order._id}>
                 <td>{order._id}</td>
                 <td>{order.user && order.user.name}</td>
@@ -67,4 +73,5 @@ const OrderListScreen = () => {
   )
 }
 
+// Export the OrderListScreen component as the default export
 export default OrderListScreen

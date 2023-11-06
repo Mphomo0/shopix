@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 import colors from 'colors'
 import users from './data/users.js'
 import products from './data/products.js'
-import User from './models/UserModel.js'
+import User from './models/userModel.js'
 import Product from './models/productModel.js'
 import Order from './models/orderModel.js'
 import connectDB from './config/db.js'
@@ -11,6 +11,7 @@ import connectDB from './config/db.js'
 dotenv.config()
 await connectDB()
 
+// Function to import data
 const importData = async () => {
   try {
     await Order.deleteMany()
@@ -20,6 +21,7 @@ const importData = async () => {
     const createdUsers = await User.insertMany(users)
     const adminUser = createdUsers[0]._id
 
+    // Assign the admin user as the owner of sample products
     const sampleProducts = products.map((product) => {
       return { ...product, user: adminUser }
     })
@@ -33,6 +35,8 @@ const importData = async () => {
     process.exit(1)
   }
 }
+
+// Function to destroy data
 const destroyData = async () => {
   try {
     await Order.deleteMany()
@@ -47,7 +51,8 @@ const destroyData = async () => {
   }
 }
 
-if (process.argv[2]) {
+// Check if the script should import or destroy data based on command-line argument
+if (process.argv[2] === '-d') {
   destroyData()
 } else {
   importData()

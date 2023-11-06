@@ -7,19 +7,24 @@ import CheckoutSteps from '../components/CheckoutSteps'
 import { saveShippingAddress } from '../slices/cartSlice'
 
 const ShippingPage = () => {
+  // Get shipping address information from the Redux store
   const cart = useSelector((state) => state.cart)
   const { shippingAddress } = cart
 
+  // State variables for shipping address form fields
   const [address, setAddress] = useState(shippingAddress.address || '')
   const [city, setCity] = useState(shippingAddress.city || '')
   const [postalCode, setPostalCode] = useState(shippingAddress.postalCode || '')
   const [country, setCountry] = useState(shippingAddress.country || '')
 
+  // Get Redux dispatch function and navigate function
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  // Function to handle the form submission
   const submitHandler = (e) => {
     e.preventDefault()
+    // Save the shipping address to the Redux store and navigate to the payment page
     dispatch(saveShippingAddress({ address, city, postalCode, country }))
     navigate('/payment')
   }

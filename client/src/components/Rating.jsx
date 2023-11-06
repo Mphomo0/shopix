@@ -2,6 +2,7 @@ import React from 'react'
 import { FaStarHalfAlt, FaStar, FaRegStar } from 'react-icons/fa'
 import PropTypes from 'prop-types'
 
+// Define a functional component called Rating that accepts value, text, and color as props
 const Rating = ({ value, text, color }) => {
   return (
     <div className='rating'>
@@ -55,14 +56,17 @@ const Rating = ({ value, text, color }) => {
   )
 }
 
+// Set the default value for the color prop
 Rating.defaultProps = {
   color: '#f8e825',
 }
 
+// Define the prop types for the Rating component
 Rating.propTypes = {
-  value: PropTypes.number.isRequired,
-  text: PropTypes.string.isRequired,
-  color: PropTypes.string,
+  value: PropTypes.number.isRequired, // value prop is required and must be a number
+  text: PropTypes.string.isRequired, // text prop is required and must be a string
+  color: PropTypes.string, // color prop is optional and should be a string
 }
 
+// Export the Rating component as the default export
 export default Rating

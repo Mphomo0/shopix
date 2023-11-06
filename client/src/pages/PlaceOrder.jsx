@@ -12,21 +12,28 @@ import { clearCartItems } from '../slices/cartSlice'
 const PlaceOrder = () => {
   const navigate = useNavigate()
 
+  // Selecting the cart state from Redux store
   const cart = useSelector((state) => state.cart)
 
+  // Using createOrder mutation from an API slice
   const [createOrder, { isLoading, error }] = useCreateOrderMutation()
 
   useEffect(() => {
+    // Redirect to the shipping page if the shipping address is missing
     if (!cart.shippingAddress.address) {
       navigate('/shipping')
     } else if (!cart.paymentMethod) {
+      // Redirect to the payment page if the payment method is missing
       navigate('/payment')
     }
   }, [cart.paymentMethod, cart.shippingAddress.address, navigate])
 
   const dispatch = useDispatch()
+
+  // Function to handle placing an order
   const placeOrderHandler = async () => {
     try {
+      // Call the createOrder mutation with the cart details
       const res = await createOrder({
         orderItems: cart.cartItems,
         shippingAddress: cart.shippingAddress,
@@ -36,9 +43,14 @@ const PlaceOrder = () => {
         taxPrice: cart.taxPrice,
         totalPrice: cart.totalPrice,
       }).unwrap()
+
+      // Clear the cart items in Redux
       dispatch(clearCartItems())
+
+      // Navigate to the order confirmation page with the order ID
       navigate(`/order/${res._id}`)
     } catch (err) {
+      // Display an error toast if there's an issue with placing the order
       toast.error(err)
     }
   }
@@ -136,6 +148,7 @@ const PlaceOrder = () => {
                 <Button
                   type='button'
                   className='btn-block'
+                  // Disable the button if the cart is empty
                   disabled={cart.cartItems === 0}
                   onClick={placeOrderHandler}
                 >

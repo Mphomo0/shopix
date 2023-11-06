@@ -10,10 +10,20 @@ import {
 } from '../controllers/orderController.js'
 import { protect, admin } from '../middleware/authMiddleware.js'
 
-router.route('/').post(protect, addOrderItems).get(protect, admin, getOrders)
+// Create a new order or get all orders (admin only)
+router
+  .route('/')
+  .post(protect, addOrderItems) // Create a new order (authenticated user)
+  .get(protect, admin, getOrders) // Get all orders (admin only)
+
+// Get the orders of the currently logged-in user
 router.route('/mine').get(protect, getMyOrders)
-router.route('/:id').get(protect, getOrderById)
-router.route('/:id/pay').put(protect, updateOrderToPaid)
-router.route('/:id/deliver').put(protect, admin, updateOrderToDelivered)
+
+// Get an order by ID, update order to paid, and update order to delivered
+router
+  .route('/:id')
+  .get(protect, getOrderById) // Get an order by ID (authenticated user)
+  .put(protect, updateOrderToPaid) // Update order to paid (authenticated user)
+  .put(protect, admin, updateOrderToDelivered) // Update order to delivered (admin only)
 
 export default router

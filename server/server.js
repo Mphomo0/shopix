@@ -18,7 +18,7 @@ connectDB()
 
 const app = express()
 
-//body parser middleware
+// Body parser middleware
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
@@ -28,11 +28,13 @@ app.post('/', (req, res) => {
   res.send('Hello')
 })
 
+// Define API routes for products, users, orders, and uploads
 app.use('/api/products/', productRoutes)
 app.use('/api/users/', userRoutes)
 app.use('/api/orders/', orderRoutes)
 app.use('/api/upload', uploadRoutes)
 
+// Define a route to get PayPal client ID from environment variables
 app.get('/api/config/paypal', (req, res) => {
   res.send({ clientId: process.env.PAYPAL_CLIENT_ID })
 })
@@ -40,7 +42,10 @@ app.get('/api/config/paypal', (req, res) => {
 const __dirname = path.resolve()
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 
+// Middleware for handling 404 errors (Not Found)
 app.use(notFound)
+
+// Middleware for handling general errors
 app.use(errorHandler)
 
 app.listen(4000, () => {

@@ -9,14 +9,15 @@ import Footer from './components/Footer'
 const App = () => {
   return (
     <>
-      <Header />
+      <Header /> {/* Render the Header component at the top of the page */}
       <main className='py-3'>
         <Container>
-          <Outlet />
+          <Outlet /> {/* Render the child route components using the Outlet */}
         </Container>
       </main>
-      <Footer />
-      <ToastContainer />
+      <Footer /> {/* Render the Footer component at the bottom of the page */}
+      <ToastContainer />{' '}
+      {/* Display toasts using the ToastContainer component */}
     </>
   )
 }

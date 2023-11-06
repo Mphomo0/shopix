@@ -1,10 +1,12 @@
 import mongoose from 'mongoose'
 
+// Define the review schema
 const reviewSchema = mongoose.Schema(
   {
     name: { type: String, required: true },
     rating: { type: Number, required: true },
     comment: { type: String, required: true },
+    // Reference to the user who wrote the review
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
@@ -12,12 +14,15 @@ const reviewSchema = mongoose.Schema(
     },
   },
   {
+    // Enable timestamps (createdAt and updatedAt) for reviews
     timestamps: true,
   }
 )
 
+// Define the product schema
 const productSchema = mongoose.Schema(
   {
+    // Reference to the user who created the product
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
@@ -43,6 +48,7 @@ const productSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    // Array of reviews associated with the product
     reviews: [reviewSchema],
     rating: {
       type: Number,
@@ -66,10 +72,12 @@ const productSchema = mongoose.Schema(
     },
   },
   {
+    // Enable timestamps (createdAt and updatedAt) for products
     timestamps: true,
   }
 )
 
+// Create the Product model
 const Product = mongoose.model('Product', productSchema)
 
 export default Product
