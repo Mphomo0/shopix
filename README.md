@@ -1,7 +1,9 @@
 ### SHOPIX
+
 Ecommerce Web Application built with the MERN Stack. Inspired by Mpho Moipolai
 
 ### Software Requirements
+
 Technology Stack: I have chosen the MERN stack, which is a popular choice for building web applications. MongoDB for the database, Express for the backend, React for the frontend, and JWT for authentication.
 
 Deployment: GitHub and Render.
@@ -78,81 +80,68 @@ to easily find the way around the application.
 - Order tracking for customers.
 - Generate shipping labels and packing lists.
 
-11. Promotions and Discounts:
-
-- Apply discounts, coupon codes, and promotional offers.
-- Set up rules for discounts (e.g., percentage off, buy-one-get-one).
-- Display sale prices and countdowns for promotions.
-
-12. Security:
+11. Security:
 
 - Implement security measures to protect user data.
 - Use HTTPS encryption for secure data transmission.
 - Regularly update and patch software to prevent vulnerabilities.
 
-13. Mobile Responsiveness:
+12. Mobile Responsiveness:
 
 - Ensure the website is mobile-friendly for users on smartphones and tablets.
 
-14. Search Engine Optimization (SEO):
+13. Search Engine Optimization (SEO):
 
 - Implement SEO best practices to improve visibility on search engines.
 - Create SEO-friendly URLs and meta tags.
 
-15. Analytics and Reporting:
+14. Analytics and Reporting:
 
 - Integrate analytics tools to track user behavior and sales performance.
 - Generate reports on website traffic, sales, and customer demographics.
 
-16. Customer Support and Contact:
+15. Customer Support and Contact:
 
 - Provide contact information and support channels (email, chat, phone).
 - Include a FAQ section and knowledge base.
 
-17. Social Media Integration:
+16. Social Media Integration:
 
 - Allow users to share products on social media.
 - Display social media feeds and links.
 
-18. Multi-language and Multi-currency Support:
+17. Multi-language and Multi-currency Support:
 
 - Cater to a global audience by supporting multiple languages and currencies.
 
-19. Wishlist and Favorites:
-
-- Enable users to create wishlists and save favorite products.
-
-20. Accessibility:
+18. Accessibility:
 
 - Ensure the website is accessible to users with disabilities (ADA compliance).
 
-21. Content Management:
+19. Content Management:
 
 - Easily update and manage website content (product listings, banners, etc.).
 - Support for blogs and news sections.
 
-22. Recommendation Engine:
+20. Recommendation Engine:
 
 - Implement product recommendations based on user behavior and preferences.
 
-23. Return and Refund Process:
+21. Return and Refund Process:
 
 - Provide a clear policy for returns and refunds.
 - Allow users to initiate return requests.
 
-24. Privacy and Data Protection:
+22. Privacy and Data Protection:
 
 - Comply with data protection regulations (e.g., GDPR, CCPA).
 - Securely store and handle customer data.
 
-25. Backup and Disaster Recovery:
+23. Backup and Disaster Recovery:
 
 - Regularly backup website data and implement disaster recovery procedures.
 
-26. Reporting and Analytics:
-
-- Generate reports on sales, user behavior, and website performance.
-27. User Notifications:
+24. User Notifications:
 
 - Send email notifications for order confirmations, shipping updates, and promotions.
 
@@ -188,8 +177,7 @@ to easily find the way around the application.
 
 - Specify requirements for integration with mobile applications, if applicable.
 
-
-### Installation 
+### Installation
 
 To run the client and server simultaneously, you can use concurrently to execute multiple commands in parallel. Add the following script to your package.json:
 
@@ -203,7 +191,7 @@ npm start
 Start the frontend:
 cd frontend npm start
 
-###  Built with
+### Built with
 
 ReactJS
 Redux toolkit
@@ -214,7 +202,7 @@ Bootstrap
 
 ### Deployment
 
-I deployed both frontend and  backend to render
+I deployed both frontend and backend to render
 
 ### User Story
 
