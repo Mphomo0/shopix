@@ -1,28 +1,19 @@
-import { Link } from 'react-router-dom'
 import { Carousel, Image } from 'react-bootstrap'
-import Message from './Message'
-import { useGetTopProductsQuery } from '../slices/productsApiSlice'
+import Banner1 from '../images/Banner1.png'
+import Banner2 from '../images/Banner2.png'
 
 const ProductCarousel = () => {
-  const { data: products, isLoading, error } = useGetTopProductsQuery()
-
-  return isLoading ? null : error ? (
-    <Message variant='danger'>{error?.data?.message || error.error}</Message>
-  ) : (
-    <Carousel pause='hover' className='bg-primary mb-4'>
-      {products.map((product) => (
-        <Carousel.Item key={product._id}>
-          <Link to={`/product/${product._id}`}>
-            <Image src={product.image} alt={product.name} fluid />
-            <Carousel.Caption className='carousel-caption'>
-              <h2 className='text-white text-right'>
-                {product.name} (R{product.price})
-              </h2>
-            </Carousel.Caption>
-          </Link>
+  return (
+    <>
+      <Carousel className='mb-4'>
+        <Carousel.Item>
+          <Image className='d-block w-100' src={Banner1} alt='First slide' />
         </Carousel.Item>
-      ))}
-    </Carousel>
+        <Carousel.Item>
+          <Image className='d-block w-100' src={Banner2} alt='First slide' />
+        </Carousel.Item>
+      </Carousel>
+    </>
   )
 }
 

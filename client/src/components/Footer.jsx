@@ -1,13 +1,13 @@
 import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
-import Logo from '../images/logo/logo.png'
 
 const Footer = () => {
   return (
     <footer>
       <div className='wrapper'>
         <Container>
-          <Row>
+          {/* for version two */}
+          {/* <Row>
             <Col xs={12} sm={6} md={2} className='mt-4 mb-4'>
               <img className='img-fluid' src={Logo} alt='logo' />
             </Col>
@@ -44,22 +44,23 @@ const Footer = () => {
                 <strong>SUBSCRIBE</strong>
               </h5>
               <p>Subscribe to our newsletter</p>
-              <form>
-                <div className='form-group'>
-                  <input
-                    type='email'
-                    className='form-control'
-                    id='exampleInputEmail1'
-                    aria-describedby='emailHelp'
-                    placeholder='Enter email'
-                  />
-                  <button type='submit' className='btn btn-primary btn-size'>
-                    Submit
-                  </button>
-                </div>
-              </form>
+              <Form className='d-flex'>
+                <Form.Control
+                  type='text'
+                  name='q'
+                  placeholder='Enter Email'
+                  className='mr-sm-2 ml-sm-5'
+                ></Form.Control>
+                <Button
+                  type='submit'
+                  variant='outline-success'
+                  className='p-2 mx-2'
+                >
+                  Subscribe
+                </Button>
+              </Form>
             </Col>
-          </Row>
+          </Row> */}
         </Container>
       </div>
       <Row>
