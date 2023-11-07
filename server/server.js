@@ -23,11 +23,6 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 
-app.post('/', (req, res) => {
-  const data = req.body
-  res.send('Hello')
-})
-
 // Define API routes for products, users, orders, and uploads
 app.use('/api/products/', productRoutes)
 app.use('/api/users/', userRoutes)
@@ -41,6 +36,20 @@ app.get('/api/config/paypal', (req, res) => {
 
 const __dirname = path.resolve()
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
+
+if (process.env.NODE_ENV === 'production') {
+  //set a static folder
+  app.use(express.static(path.join(__dirname, 'client/build')))
+
+  //any route that is not api will be redirected to index.html
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  )
+} else {
+  app.get('/', (req, res) => {
+    res.send('Hello')
+  })
+}
 
 // Middleware for handling 404 errors (Not Found)
 app.use(notFound)
